@@ -1,8 +1,6 @@
 import Head from 'next/head'
 import Mates from '../components/Mates';
 import CreateMates from '../components/CreateMates';
-import { db } from '../components/firebaseConfig';
-import { collection, getDocs } from 'firebase/firestore';
 
 export default function Home() {
 
