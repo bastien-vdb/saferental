@@ -1,7 +1,4 @@
-import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { db } from '../firebaseConfig';
-import { collection, addDoc } from 'firebase/firestore';
 import useMates from '../hooks/useMates';
 
 function CreateMates(props) {
@@ -10,6 +7,8 @@ function CreateMates(props) {
 
     const [description, setDescription] = useState("");
     const [name, setName] = useState("");
+
+    const [file, setFile] = useState(null);
 
     const handleName = (event) => {
         setName(() => event.target.value);
@@ -22,8 +21,16 @@ function CreateMates(props) {
         handleSendInfo({ name, description });
     }
 
+    const handleFile = (event)=>{
+        const file = event.target.files[0];
+        if (file) setFile(file);
+        ;
+        console.log(file);
+    }
+
     return (
-        <div className='flex gap-10'>
+        <div className='flex flex-col gap-10'>
+            <input type='file' placeholder='Upload an image' onChange={(event)=>{handleFile(event)}}/>
             <input placeholder='name' onChange={(event) => handleName(event)} />
             <input placeholder='description' onChange={(event) => handleDescription(event)} />
             <button onClick={handleCreateUser}>Send</button>

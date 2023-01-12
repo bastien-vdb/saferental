@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { db } from '../firebaseConfig';
 import { collection, getDocs, addDoc, updateDoc, doc, deleteDoc } from 'firebase/firestore';
+import { storage } from '../firebaseConfig';
+import { ref, uploadBytes } from 'firebase/storage';
 
 function useMates(props) {
     const matesCollection = collection(db, "mates");
@@ -11,13 +13,13 @@ function useMates(props) {
         await addDoc(matesCollection, newUser);
     }
 
-    const updateMate = async(id, description) => {
+    const updateMate = async (id, description) => {
         const userDoc = await doc(db, "mates", id);
-        const newValue = {description: description} 
+        const newValue = { description: description }
         await updateDoc(userDoc, newValue);
     }
 
-    const deleteMate = async(id) => {
+    const deleteMate = async (id) => {
         const userDoc = await doc(db, "mates", id);
         await deleteDoc(userDoc);
     }
@@ -36,7 +38,7 @@ function useMates(props) {
         getMates();
     }, [])
 
-    return { mates, createMate, updateMate, deleteMate};
+    return { mates, createMate, updateMate, deleteMate };
 }
 
 export default useMates;
