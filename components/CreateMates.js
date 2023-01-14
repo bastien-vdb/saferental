@@ -3,7 +3,7 @@ import useMates from '../hooks/useMates';
 
 function CreateMates(props) {
 
-    const { handleSendInfo } = useMates();
+    const { createMate, uploadMatePicture, errorMsg } = useMates();
 
     const [description, setDescription] = useState("");
     const [name, setName] = useState("");
@@ -17,20 +17,31 @@ function CreateMates(props) {
         setDescription(() => event.target.value);
     }
 
-    const handleCreateUser = () => {
-        handleSendInfo({ name, description });
+    const handleCreateUser = async () => {
+        if (file) {
+            uploadMatePicture(file)
+                .then(res => {
+                    if (res.urlGenerated) {
+                        const url = res.urlGenerated;
+                        const ref = res.refUrl;
+                        console.log(ref);
+                        createMate({ name, description, ref, url })
+                    }
+                })
+                .catch(err => console.log(err))
+        }
     }
 
-    const handleFile = (event)=>{
-        const file = event.target.files[0];
-        if (file) setFile(file);
-        ;
-        console.log(file);
+    const handleFile = (event) => {
+        setFile(event.target.files[0]);
     }
+
+
+
 
     return (
         <div className='flex flex-col gap-10'>
-            <input type='file' placeholder='Upload an image' onChange={(event)=>{handleFile(event)}}/>
+            <input type='file' placeholder='Upload an image' onChange={(event) => { handleFile(event) }} />
             <input placeholder='name' onChange={(event) => handleName(event)} />
             <input placeholder='description' onChange={(event) => handleDescription(event)} />
             <button onClick={handleCreateUser}>Send</button>

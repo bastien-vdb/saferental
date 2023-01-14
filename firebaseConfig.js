@@ -10,14 +10,14 @@ import { getStorage } from '@firebase/storage';
 const firebaseConfig = {
     apiKey: process.env.APIKEY,
     authDomain: process.env.AUTHDOMAIN,
-    projectId: "saferental-c3dcc",
-    storageBucket: "saferental-c3dcc.appspot.com",
+    projectId: "roommatesafe-fa6a9",
+    storageBucket: "roommatesafe-fa6a9.appspot.com",
     messagingSenderId: process.env.MSGSDRID,
     appId: process.env.APPID,
     measurementId: process.env.MEASUREMENTID
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig, "roommate");
 export const db = getFirestore(app);
 export const storage = getStorage(app);
